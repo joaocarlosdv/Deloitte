@@ -1,0 +1,166 @@
+﻿@{
+    ViewData["Title"] = "Usuários";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-header d-flex justify-content-start top-h flex-column align-items-start">
+            <h2 class="content-header-title float-left mb-0">Usuários</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Usuários</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <a class="btn btn-primary"
+                           href="@Url.Action("Cadastro", "Usuario")">
+                            <i class="bi bi-plus"></i>
+                            <span>Novo </span>
+                        </a> 
+                        
+                        <br/><br/>
+                        <table class="table table-striped table-hover" id="myTable"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module">    
+    $(document).ready(function () {        
+        
+        $('#myTable').DataTable({
+            processing: true,    
+            serverSide: true, 
+            ajax: {
+                url: '/Usuario/ConsultarUsuarios', 
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: function (d) {
+
+                    var json = JSON.stringify({
+                        limit: d.length,
+                        offset: d.start,
+                        search: d.search.value || null,
+                        colOrder: d.order[0].column,
+                        dirOrder: d.order[0].dir
+                    });
+
+                    return json;
+                },
+                dataSrc: function (json) {
+                    return json.listaUsuarios;
+                }
+            },
+            columns: [
+                { data: 'id', title: 'Id' },
+                { data: 'nome', title: 'Nome' },
+                { 
+                    data: 'valorHora', 
+                    title: 'Valor da Hora' ,
+                    render: function (data, type, row) { 
+                        if (!data) return ""; 
+
+                        return data.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                    }
+                        
+                },
+                {
+                    data: 'dataCadastro',
+                    title: 'Data do Cadastro',
+                    render: function (data, type, row) {
+                        if (!data) return ""; 
+
+                        let date = new Date(data);
+                        let day = String(date.getDate()).padStart(2, '0');
+                        let month = String(date.getMonth() + 1).padStart(2, '0');
+                        let year = date.getFullYear();
+
+                        return `${day}/${month}/${year}`; 
+                    }
+                },
+                {
+                    data: 'ativo',
+                    title: 'Ativo',
+                    render: function (data) {
+                        return data ? "Sim" : "Não"; 
+                    }
+                },
+                {
+                    data: null,
+                    title: 'Ações',
+                    render: function (data, type, row) {                        
+                        var url = '';
+
+                        url = `/Usuario/Visualizar?idUsuario=${row.id}`;
+                        var btnVisualizar = `
+                                    <a class="d-block px-1"
+                                        style="color: green"
+                                        href="${url}"
+                                    >
+                                            <i class="bi bi-eye"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Visualizar">
+                                            </i>
+                                    </a>
+                                `;
+                        
+                        url = `/Usuario/Editar?idUsuario=${row.id}`;
+                        var btnEditar = `
+                                    <a class="d-block px-1"
+                                        style="color: blue"
+                                        href="${url}"
+                                    >
+                                            <i class="bi bi-pencil-square"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Editar">
+                                            </i>
+                                    </a>
+                                `;
+
+                        url = `/Usuario/Excluir?idUsuario=${row.id}`;
+                        var btnExcluir = `
+                                    <a class="d-block px-1"
+                                        style="color: red"
+                                        href="${url}"
+                                    >
+                                            <i class="bi bi-trash"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Excluir">
+                                            </i>
+                                    </a>
+                                `;
+
+                        return '<div class="d-flex">' + btnVisualizar + btnEditar + btnExcluir + '<\div>';
+                    }
+                }
+            ],
+            order: [[0, 'desc']],
+            pageLength: 5,      
+            lengthMenu: [5, 10, 50, 100], 
+            language: {
+                zeroRecords: "Nenhum registro encontrado.",
+                search: "Localizar",
+                lengthMenu: "Itens por página _MENU_ ",
+                paginate: {
+                    previous: "< Anterior ",
+                    next: " Próxima >",
+                },
+                sInfo: "Exibindo de _START_ até _END_ de _TOTAL_ registros",
+                "infoFiltered": "",
+                sInfoEmpty: "Exibindo 0 registros"
+            }
+        });
+    });
+</script>

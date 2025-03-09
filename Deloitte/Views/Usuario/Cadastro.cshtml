@@ -1,0 +1,126 @@
+﻿@using Deloitte.Enums;
+@model UsuarioViewModel;
+@{
+    ViewData["Title"] = Model.ModoTela == ModoTela.Cadastrar ? "Cadastrar Usuário" : Model.ModoTela == ModoTela.Editar ? "Editar Usuário" : "Visualizar Usuário";
+}
+
+<div class="container-fluid">
+    <form action="@Url.Action("Salvar", "Usuario")"
+              method="post"
+              id="myform"
+              name="myForm">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-header d-flex justify-content-start top-h flex-column align-items-start">
+                    <h2 class="content-header-title float-left mb-0">@ViewData["Title"]</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Usuario")">Usuários</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+                        </ol>
+                    </nav>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12">
+                        <div class="form-group">
+                            <label class="top-label">Id</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="id"
+                                   id="id"
+                                   value="@Model.Usuario.Id"
+                                   readonly />
+                        </div>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
+                        <div class="form-group">
+                            <label class="top-label">Nome*</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="nome"
+                                   id="nome"
+                                   value="@Model.Usuario.Nome"
+                                   required
+                                   @(Model.ModoTela == ModoTela.Visualizar ? "disabled" : string.Empty) />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+                        <div class="form-group">
+                            <label class="top-label">Valor Hora</label>
+                            <input type="text"
+                                   class="form-control money"
+                                   name="valorHora"
+                                   id="valorHora"
+                                   @* value="@Model.Usuario.ValorHora.ToString("C2", System.Globalization.CultureInfo.CurrentCulture)" *@
+                                   placeholder="0,00"
+                                   maxlength="17"
+                                   value="@Model.Usuario.ValorHora"
+                                   @(Model.ModoTela == ModoTela.Visualizar ? "disabled" : string.Empty) />
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+                        <div class="form-group">
+                            <label class="top-label">Data Cadastro</label>
+                            <input type="date"
+                                   class="form-control"
+                                   name="nome"
+                                   id="nome"
+                                   value="@Model.Usuario.DataCadastro.ToString("yyyy-MM-dd")"
+                                   readonly />
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+                        <div class="form-group">
+                            <label class="top-label">Ativo</label>
+                            <select class="form-select"
+                                    name="ativo"
+                                    id="ativo"
+                                    value="@Model.Usuario.Ativo"
+                                    @(Model.ModoTela == ModoTela.Visualizar ? "disabled" : string.Empty)>
+                                @if (Model.ModoTela == ModoTela.Cadastrar)
+                                {
+                                    <option value="false">Não</option>
+                                    <option value="true" selected>Sim</option>
+                                }
+                                else if (Model.Usuario.Ativo == true)
+                                {
+                                    <option value="false">Não</option>
+                                    <option value="true" selected>Sim</option>
+                                }
+                                else
+                                {
+                                    <option value="false" selected>Não</option>
+                                    <option value="true">Sim</option>
+                                }   
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+            <div class="card-footer">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
+                    <button type="submit"
+                            class="btn btn-primary"
+                            id="btnSalvar"
+                    @(Model.ModoTela == ModoTela.Visualizar ? "hidden" : string.Empty)>
+                        Salvar
+                    </button>
+                    <a href="@Url.Action("Index", "Usuario")"
+                       class="btn btn-secondary">
+                        @(Model.ModoTela == ModoTela.Visualizar ? "Fechar" : "Cancelar")
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script rel="stylesheet" src="~/js/maskMoney.min.js"></script>
+<script rel="stylesheet" src="~/js/jquery.mask.min.js"></script>
+<script>
+    $(".money").maskMoney({ decimal: ',', thousands: '.', precision: 2, prefix: 'R$ ' });
+</script>

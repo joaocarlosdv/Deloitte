@@ -1,0 +1,11 @@
+D:\Projetos\Decision\Domain\bin\Debug\net7.0\Domain.deps.json
+D:\Projetos\Decision\Domain\bin\Debug\net7.0\Domain.dll
+D:\Projetos\Decision\Domain\bin\Debug\net7.0\Domain.pdb
+D:\Projetos\Decision\Domain\obj\Debug\net7.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\Decision\Domain\obj\Debug\net7.0\Domain.AssemblyInfoInputs.cache
+D:\Projetos\Decision\Domain\obj\Debug\net7.0\Domain.AssemblyInfo.cs
+D:\Projetos\Decision\Domain\obj\Debug\net7.0\Domain.csproj.CoreCompileInputs.cache
+D:\Projetos\Decision\Domain\obj\Debug\net7.0\Domain.dll
+D:\Projetos\Decision\Domain\obj\Debug\net7.0\refint\Domain.dll
+D:\Projetos\Decision\Domain\obj\Debug\net7.0\Domain.pdb
+D:\Projetos\Decision\Domain\obj\Debug\net7.0\ref\Domain.dll
