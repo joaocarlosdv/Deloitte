@@ -1,12 +1,9 @@
 ﻿using Application.Dtos;
-using Application.Services;
-using Application.Services.Crud;
 using Application.Services.Interface;
 using Deloitte.Controllers.Crud;
 using Deloitte.Enums;
 using Deloitte.Models;
 using Deloitte.Requests;
-using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Deloitte.Controllers
