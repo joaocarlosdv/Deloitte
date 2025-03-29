@@ -1,0 +1,10 @@
+﻿################################################################################
+# Este arquivo .gitignore foi criado automaticamente pelo Microsoft(R) Visual Studio.
+################################################################################
+
+/Deloitte/.vs/Deloitte/DesignTimeBuild/.dtbcache.v2
+/Deloitte/.vs/Deloitte/FileContentIndex/3cf09fcd-5e6e-4583-8203-c9044bd60678.vsidx
+*.vsidx
+*.v2
+/Deloitte/.vs/Deloitte/v17/.suo
+*.bin
